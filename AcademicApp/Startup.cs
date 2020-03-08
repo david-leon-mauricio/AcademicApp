@@ -1,7 +1,10 @@
+using AcademicApp.Helpers;
 using AcademicApp.Services.Students;
+using AcademicApp.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,6 +20,8 @@ namespace AcademicApp
 
         public IConfiguration Configuration { get; }
 
+        private const string StudentsKey = "Students";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -29,10 +34,13 @@ namespace AcademicApp
 
             services.AddSingleton(Configuration);
             services.AddTransient<IStudentsService, StudentsService>();
+
+            services.AddSingleton<ICache, LocalMemory>();
+            services.AddSingleton<MemoryCacheOptions, MemoryCacheOptions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICache cache)
         {
             if (env.IsDevelopment())
             {
@@ -75,6 +83,15 @@ namespace AcademicApp
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            LoadData(cache);
+        }
+
+        private void LoadData(ICache localMemoryCache)
+        {
+            var csvConfiguration = Configuration.GetSection("Csv");
+            var elements = CsvFileHelper.Import(csvConfiguration.GetValue<string>("FileName"));
+            localMemoryCache.Add(StudentsKey, elements);
         }
     }
 }

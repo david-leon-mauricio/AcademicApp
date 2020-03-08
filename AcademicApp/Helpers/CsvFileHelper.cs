@@ -20,7 +20,7 @@ namespace AcademicApp.Helpers
                 csvReader.Configuration.PrepareHeaderForMatch = (header, index) => header.ToLower();
                 csvReader.Read();
                 csvReader.ReadHeader();
-                
+
                 while (csvReader.Read())
                 {
                     var student = new Student

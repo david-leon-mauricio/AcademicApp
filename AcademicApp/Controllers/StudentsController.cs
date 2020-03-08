@@ -1,4 +1,5 @@
-﻿using AcademicApp.Services.Students;
+﻿using AcademicApp.Helpers;
+using AcademicApp.Services.Students;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademicApp.Controllers
@@ -15,9 +16,13 @@ namespace AcademicApp.Controllers
 
         // GET: api/Students
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(
+            [FromQuery] SearchBy searchBy,
+            [FromQuery(Name = "Name")] string studentName,
+            [FromQuery(Name = "Type")] string studentType,
+            [FromQuery(Name = "Gender")] char studentGender)
         {
-            var students = _studentsService.Get();
+            var students = _studentsService.Get(searchBy, studentName, studentType, studentGender);
 
             return Ok(students);
         }
