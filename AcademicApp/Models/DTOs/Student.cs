@@ -1,22 +1,24 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace AcademicApp.Models.DTOs
 {
     public sealed class Student
     {
         public string Name { get; }
-        public int PersonalIdentifier { get; } // This was required to avoid insert duplicated values
+        public int PersonalIdentifier { get; } // This was required to avoid duplicated values
         public char Gender { get; }
         public string Type { get; }
-        public DateTime Modified { get; }
+        public DateTime Updated { get; }
 
-        public Student(string name, int personalIdentifier, char gender, string type, DateTime modified)
+        [JsonConstructor]
+        public Student(string name, int personalIdentifier, char gender, string type, DateTime updated)
         {
             Name = name;
             PersonalIdentifier = personalIdentifier;
             Gender = gender;
             Type = type;
-            Modified = modified;
+            Updated = updated;
         }
 
         public override bool Equals(object obj)
@@ -38,7 +40,7 @@ namespace AcademicApp.Models.DTOs
 
         public override string ToString()
         {
-            return $"Student({Name}, {PersonalIdentifier}, {Gender}, {Type}, {Modified})";
+            return $"Student({Name}, {PersonalIdentifier}, {Gender}, {Type}, {Updated})";
         }
     }
 }

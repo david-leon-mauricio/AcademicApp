@@ -1,8 +1,10 @@
-﻿using AcademicApp.Models.DTOs;
+﻿using AcademicApp.Helpers;
+using AcademicApp.Models.DTOs;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AcademicApp.Services.Students
 {
@@ -10,28 +12,64 @@ namespace AcademicApp.Services.Students
     {
         private IDictionary<int, Student> _students;
 
-        public StudentsService()
+        private readonly string _csvFileName;
+        private readonly ILogger _logger;
+
+        public StudentsService(IConfiguration configuration)
         {
-        }
+            var csvConfiguration = configuration.GetSection("Csv");
+            _csvFileName = csvConfiguration.GetValue<string>("FileName");
+            _students = GetStudentsFromCsvFile();
+        }        
 
         public List<Student> Get()
         {
-            return null;
+            return _students.Values.ToList();
         }
 
-        public Student Get(int id)
+        public Student Get(int personalIdentifier)
         {
-            return null;
+            Student student = null;
+            if (_students.TryGetValue(personalIdentifier, out var value))
+            {
+                student = value;
+            }
+
+            return student;
         }
 
-        public void Add(Student student)
+        public void Add(StudentItem student)
         {
-            //return true;
+            if (!_students.ContainsKey(student.PersonalIdentifier))
+            {
+                _students.Add(student.PersonalIdentifier, new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, student.Updated));
+            }
         }
 
-        public void Remove(int id)
+        public void Update(int personalIdentifier, StudentItem student)
         {
-            //return true;
+            _students[personalIdentifier] = new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, student.Updated);
+        }
+
+        public void Remove(int personalIdentifier)
+        {
+            _students.Remove(personalIdentifier);
+        }
+
+        private Dictionary<int, Student> GetStudentsFromCsvFile()
+        {
+            var students = new Dictionary<int, Student>();
+
+            try
+            {
+                students = CsvFileHelper.Import(_csvFileName);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error trying to get CSV file");
+            }
+
+            return students;
         }
     }
 }
