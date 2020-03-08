@@ -2,20 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademicApp.Services.Students;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademicApp.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class StudentsController : Controller
     {
+        private readonly IStudentsService _studentsService;
+
+        public StudentsController(IStudentsService studentsService)
+        {
+            _studentsService = studentsService;
+        }
+
         // GET: api/Students
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var students = _studentsService.Get();
+            //return new string[] { "value1", "value2" };
+            return Ok(students);
         }
 
         // GET: api/Students/5
