@@ -2,27 +2,29 @@
 <p>This component demonstrates fetching Student data from the server.</p>  
 <p *ngIf="!studentList"><em>Loading...</em></p>  
 <p>  
-    <a [routerLink]="['/register-employee']">Create New</a>  
+    <a [routerLink]="['/register-student']">Create New</a>  
 </p>  
-<table class='table' *ngIf="empList">  
+<table class='table' *ngIf="studentList">  
     <thead>  
         <tr>  
             <th>Personal Identifier</th>  
             <th>Name</th>  
             <th>Gender</th>  
             <th>Type</th>
+            <th>Updated</th>
         </tr>  
     </thead>  
     <tbody>  
         <tr *ngFor="let student of studentList">  
-            <td>{{ student.id }}</td>  
+            <td>{{ student.personalIdentifier }}</td>  
             <td>{{ student.name }}</td>  
             <td>{{ student.gender }}</td>  
             <td>{{ student.type }}</td>  
+            <td>{{ student.updated }}</td> 
             <td>  
             <td>  
-                <a [routerLink]="['/student/edit/', student.id]">Edit</a> |  
-                <a [routerLink]="" (click)="delete(student.id)">Delete</a>  
+                <a [routerLink]="['/student/edit/', student.personalIdentifier]">Edit</a> |  
+                <a [routerLink]="" (click)="delete(student.personalIdentifier)">Delete</a>  
             </td>  
         </tr>  
     </tbody>  

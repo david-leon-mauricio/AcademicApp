@@ -1,10 +1,49 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+﻿<h1>{{title}}</h1>
+<h3>Student</h3>
+<hr />
+<form [formGroup]="studentForm" (ngSubmit)="save()" #formDir="ngForm" novalidate>
+    <div class="form-group row">
+            <label class=" control-label col-md-12">Personal Identifier</label>
+            <div class="col-md-4">
+                <input class="form-control" type="text" formControlName="personalIdentifier">
+            </div>
+            <span class="text-danger" *ngIf="personalIdentifier.invalid && formDir.submitted">
+                Personal Identifier is required.
+            </span>
+    </div>
+    <div class="form-group row">
+        <label class=" control-label col-md-12">Name</label>
+        <div class="col-md-4">
+            <input class="form-control" type="text" formControlName="name">
+        </div>
+        <span class="text-danger" *ngIf="name.invalid && formDir.submitted">
+            Name is required.
+        </span>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-12" for="Gender">Gender</label>
+        <div class="col-md-4">
+            <select class="form-control" data-val="true" formControlName="gender">
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <span class="text-danger" *ngIf="gender.invalid && formDir.submitted">
+            Gender is required
+        </span>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-12" for="Type">Type</label>
+        <div class="col-md-4">
+            <input class="form-control" type="text" formControlName="type">
+        </div>
+        <span class="text-danger" *ngIf="type.invalid && formDir.submitted">
+            Type is required
+        </span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Save</button>
+        <button class="btn" (click)="cancel()">Cancel</button>
+    </div>
+</form>

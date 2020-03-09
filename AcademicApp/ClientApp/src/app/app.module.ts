@@ -1,34 +1,38 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+import { NgModule } from '@angular/core';  
+import { StudentService } from './services/studentservice.service'  
+import { CommonModule } from '@angular/common';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
+import { HttpModule } from '@angular/http';  
+import { RouterModule } from '@angular/router';  
+  
+import { AppComponent } from './components/app/app.component';  
+import { NavMenuComponent } from './components/navmenu/navmenu.component';  
+import { HomeComponent } from './components/home/home.component';  
+import { FetchStudentComponent } from './components/fetchstudent/fetchstudent.component'  
+import { createstudent } from './components/addstudent/addstudent.component'  
+  
+@NgModule({  
+    declarations: [  
+        AppComponent,  
+        NavMenuComponent,  
+        HomeComponent,  
+        FetchStudentComponent,  
+        createstudent,  
+    ],  
+    imports: [  
+        CommonModule,  
+        HttpModule,  
+        FormsModule,  
+        ReactiveFormsModule,  
+        RouterModule.forRoot([  
+            { path: '', redirectTo: 'home', pathMatch: 'full' },  
+            { path: 'home', component: HomeComponent },  
+            { path: 'fetch-student', component: FetchStudentComponent },  
+            { path: 'register-student', component: createstudent },  
+            { path: 'student/edit/:id', component: createstudent },  
+            { path: '**', redirectTo: 'home' }  
+        ])  
+    ],  
+    providers: [StudentService]  
+}) 
 export class AppModule { }

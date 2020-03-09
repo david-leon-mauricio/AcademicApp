@@ -7,27 +7,28 @@ import { StudentService } from '../../services/studentservice.service'
   templateUrl: './fetchemployee.component.html'
 })
 export class FetchStudentComponent {
-  public empList: StudentData[];
+  public studentList: StudentData[];
   constructor(public http: Http, private _router: Router, private _studentService: StudentService) {
     this.getStudents();
   }
   getStudents() {
     this._studentService.getStudents().subscribe(
-      data => this.empList = data
+      data => this.studentList = data
     )
   }
-  delete(studentID) {
-    var ans = confirm("Do you want to delete student with personal Id: " + studentID);
+  delete(personalIdentifier) {
+    var ans = confirm("Do you want to delete student with personal Id: " + personalIdentifier);
     if (ans) {
-      this._studentService.deleteStudent(studentID).subscribe((data) => {
+      this._studentService.deleteStudent(personalIdentifier).subscribe((data) => {
         this.getStudents();
       }, error => console.error(error))
     }
   }
 }
 interface StudentData {
-  id: number;
+  personalIdentifier: number;
   name: string;
   gender: string;
   type: string;
+  updated: string;
 }
