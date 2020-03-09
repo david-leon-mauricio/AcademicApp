@@ -119,7 +119,7 @@ namespace AcademicApp.Tests.Services.Students
 
         [Fact]
         [Trait("Category", "Unit")]
-        public void Remove_StudentName_StudentUpdated()
+        public void Remove_ByPersonalIdentifier_StudentRemoved()
         {
             var numberOfStudentsBeforeToRemove = _subject.Get(SearchBy.None, "", "", ' ').Count;
 

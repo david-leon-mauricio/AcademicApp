@@ -1,14 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StudentService } from '../../services/studentservice.service'
 @Component({
-  selector: 'fetchemployee',
-  templateUrl: './fetchemployee.component.html'
+  selector: 'fetchstudent',
+  templateUrl: './fetchstudent.component.html'
 })
 export class FetchStudentComponent {
   public studentList: StudentData[];
-  constructor(public http: Http, private _router: Router, private _studentService: StudentService) {
+  constructor(public http: HttpClient, private _router: Router, private _studentService: StudentService) {
     this.getStudents();
   }
   getStudents() {
@@ -26,8 +27,8 @@ export class FetchStudentComponent {
   }
 }
 interface StudentData {
-  personalIdentifier: number;
   name: string;
+  personalIdentifier: number;
   gender: string;
   type: string;
   updated: string;

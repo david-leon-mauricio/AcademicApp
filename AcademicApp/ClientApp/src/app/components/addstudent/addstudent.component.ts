@@ -10,7 +10,7 @@ import { StudentService } from '../../services/studentservice.service';
     templateUrl: './addstudent.component.html'  
 })  
   
-export class createstudent implements OnInit {  
+export class CreateStudent implements OnInit {  
     studentForm: FormGroup;  
     title: string = "Create";  
     id: number;  
@@ -23,7 +23,7 @@ export class createstudent implements OnInit {
         }  
   
         this.studentForm = this._fb.group({  
-            id: 0,  
+            personalIdentifier: [0, [Validators.required]],  
             name: ['', [Validators.required]],  
             gender: ['', [Validators.required]],  
             type: ['', [Validators.required]]  
@@ -48,23 +48,23 @@ export class createstudent implements OnInit {
         if (this.title == "Create") {  
             this._studentService.saveStudent(this.studentForm.value)  
                 .subscribe((data) => {  
-                    this._router.navigate(['/fetch-student']);  
+                    this._router.navigate(['/fetchstudent']);  
                 }, error => this.errorMessage = error)  
         }  
         else if (this.title == "Edit") {  
             this._studentService.updateStudent(this.studentForm.value)  
                 .subscribe((data) => {  
-                    this._router.navigate(['/fetch-student']);  
+                    this._router.navigate(['/fetchstudent']);  
                 }, error => this.errorMessage = error)   
         }  
     }  
   
     cancel() {  
-        this._router.navigate(['/fetch-student']);  
+        this._router.navigate(['/fetchstudent']);  
     }  
   
+    get personalIdentifier() { return this.studentForm.get('personalIdentifier'); }
     get name() { return this.studentForm.get('name'); }  
     get gender() { return this.studentForm.get('gender'); }  
-    get type() { return this.studentForm.get('type'); }  
-    get updated() { return this.studentForm.get('updated'); }  
+    get type() { return this.studentForm.get('type'); }
 }

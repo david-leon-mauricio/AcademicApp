@@ -5,11 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';  
 import { RouterModule } from '@angular/router';  
   
-import { AppComponent } from './components/app/app.component';  
-import { NavMenuComponent } from './components/navmenu/navmenu.component';  
-import { HomeComponent } from './components/home/home.component';  
+import { AppComponent } from './app.component';  
+import { NavMenuComponent } from './nav-menu/nav-menu.component';  
+import { HomeComponent } from './home/home.component';  
 import { FetchStudentComponent } from './components/fetchstudent/fetchstudent.component'  
-import { createstudent } from './components/addstudent/addstudent.component'  
+import { CreateStudent } from './components/addstudent/addstudent.component'  
+import { BrowserModule } from '@angular/platform-browser';
   
 @NgModule({  
     declarations: [  
@@ -17,9 +18,10 @@ import { createstudent } from './components/addstudent/addstudent.component'
         NavMenuComponent,  
         HomeComponent,  
         FetchStudentComponent,  
-        createstudent,  
+        CreateStudent,  
     ],  
-    imports: [  
+    imports: [ 
+        BrowserModule, 
         CommonModule,  
         HttpModule,  
         FormsModule,  
@@ -27,12 +29,13 @@ import { createstudent } from './components/addstudent/addstudent.component'
         RouterModule.forRoot([  
             { path: '', redirectTo: 'home', pathMatch: 'full' },  
             { path: 'home', component: HomeComponent },  
-            { path: 'fetch-student', component: FetchStudentComponent },  
-            { path: 'register-student', component: createstudent },  
-            { path: 'student/edit/:id', component: createstudent },  
+            { path: 'fetchstudent', component: FetchStudentComponent },  
+            { path: 'register-student', component: CreateStudent },  
+            { path: 'student/edit/:id', component: CreateStudent },  
             { path: '**', redirectTo: 'home' }  
         ])  
-    ],  
+    ],
+    bootstrap: [AppComponent],  
     providers: [StudentService]  
 }) 
 export class AppModule { }
