@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AcademicApp.Services.Students
+﻿namespace AcademicApp.Services.Students
 {
     public class StudentItem
     {
@@ -8,6 +6,5 @@ namespace AcademicApp.Services.Students
         public int PersonalIdentifier { get; set; }
         public char Gender { get; set; }
         public string Type { get; set; }
-        public DateTime Updated { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using AcademicApp.Converters;
 using AcademicApp.Helpers;
 using AcademicApp.Services.Students;
 using AcademicApp.Storage;
@@ -37,6 +38,11 @@ namespace AcademicApp
 
             services.AddSingleton<ICache, LocalMemory>();
             services.AddSingleton<MemoryCacheOptions, MemoryCacheOptions>();
+
+            services.AddControllers().AddJsonOptions(options =>
+             {
+                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -68,14 +68,14 @@ namespace AcademicApp.Services.Students
         {
             if (!_students.ContainsKey(student.PersonalIdentifier))
             {
-                _students.Add(student.PersonalIdentifier, new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, student.Updated));
+                _students.Add(student.PersonalIdentifier, new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, DateTime.UtcNow));
                 EnsureData();
             }
         }
 
         public void Update(int personalIdentifier, StudentItem student)
         {
-            _students[personalIdentifier] = new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, student.Updated);
+            _students[personalIdentifier] = new Student(student.Name, student.PersonalIdentifier, student.Gender, student.Type, DateTime.UtcNow);
             EnsureData();
         }
 

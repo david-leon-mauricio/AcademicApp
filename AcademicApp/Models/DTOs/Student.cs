@@ -6,7 +6,7 @@ namespace AcademicApp.Models.DTOs
     public sealed class Student
     {
         public string Name { get; }
-        public int PersonalIdentifier { get; } // This was required to avoid duplicated values
+        public int PersonalIdentifier { get; } // Like Passport number, DNI, etc
         public char Gender { get; }
         public string Type { get; }
         public DateTime Updated { get; }
