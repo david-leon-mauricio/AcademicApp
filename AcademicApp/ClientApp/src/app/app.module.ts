@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';  
-import { StudentService } from './services/studentservice.service'  
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';  
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';  
 import { RouterModule } from '@angular/router';  
   
@@ -21,9 +21,10 @@ import { BrowserModule } from '@angular/platform-browser';
         CreateStudent,  
     ],  
     imports: [ 
-        BrowserModule, 
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }), 
         CommonModule,  
-        HttpModule,  
+        HttpClientModule,
+        HttpModule,
         FormsModule,  
         ReactiveFormsModule,  
         RouterModule.forRoot([  
@@ -36,6 +37,6 @@ import { BrowserModule } from '@angular/platform-browser';
         ])  
     ],
     bootstrap: [AppComponent],  
-    providers: [StudentService]  
+    providers: []  
 }) 
 export class AppModule { }

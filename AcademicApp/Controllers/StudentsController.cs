@@ -48,10 +48,10 @@ namespace AcademicApp.Controllers
         }
 
         // PUT: api/Students/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] StudentItem student)
+        [HttpPut]
+        public void Put([FromBody] StudentItem student)
         {
-            _studentsService.Update(id, student);
+            _studentsService.Update(student.PersonalIdentifier, student);
         }
 
         // DELETE: api/ApiWithActions/5

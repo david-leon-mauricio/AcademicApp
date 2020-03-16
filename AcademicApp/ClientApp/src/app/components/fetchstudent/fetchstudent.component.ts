@@ -1,35 +1,30 @@
-import { Component, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { StudentService } from '../../services/studentservice.service'
+import { Student } from '../../../models/student';
+
 @Component({
   selector: 'fetchstudent',
-  templateUrl: './fetchstudent.component.html'
+  templateUrl: './fetchstudent.component.html',
+  styleUrls: ['./fetchstudent.component.css']
 })
 export class FetchStudentComponent {
-  public studentList: StudentData[];
-  constructor(public http: HttpClient, private _router: Router, private _studentService: StudentService) {
+
+  public studentList: Student[];
+
+  constructor(private _studentService: StudentService) {
     this.getStudents();
   }
   getStudents() {
     this._studentService.getStudents().subscribe(
-      data => this.studentList = data
+      (data: Student[]) => this.studentList = data
     )
   }
   delete(personalIdentifier) {
     var ans = confirm("Do you want to delete student with personal Id: " + personalIdentifier);
     if (ans) {
-      this._studentService.deleteStudent(personalIdentifier).subscribe((data) => {
+      this._studentService.deleteStudent(personalIdentifier).subscribe(() => {
         this.getStudents();
       }, error => console.error(error))
     }
   }
-}
-interface StudentData {
-  name: string;
-  personalIdentifier: number;
-  gender: string;
-  type: string;
-  updated: string;
 }

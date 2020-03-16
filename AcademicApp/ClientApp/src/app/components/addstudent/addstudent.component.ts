@@ -1,13 +1,13 @@
-﻿import { Component, OnInit } from '@angular/core';  
-import { Http, Headers } from '@angular/http';  
-import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';  
-import { Router, ActivatedRoute } from '@angular/router';  
-import { FetchStudentComponent } from '../fetchstudent/fetchstudent.component';  
-import { StudentService } from '../../services/studentservice.service';  
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';  
+import { Router, ActivatedRoute } from '@angular/router';
+import { StudentService } from '../../services/studentservice.service';
+import { Student } from '../../../models/student';
   
 @Component({  
     selector: 'createstudent',  
-    templateUrl: './addstudent.component.html'  
+    templateUrl: './addstudent.component.html',
+    styleUrls: ['./addstudent.component.css'] 
 })  
   
 export class CreateStudent implements OnInit {  
@@ -23,7 +23,7 @@ export class CreateStudent implements OnInit {
         }  
   
         this.studentForm = this._fb.group({  
-            personalIdentifier: [0, [Validators.required]],  
+            personalIdentifier: ['', [Validators.required]],  
             name: ['', [Validators.required]],  
             gender: ['', [Validators.required]],  
             type: ['', [Validators.required]]  
@@ -34,8 +34,9 @@ export class CreateStudent implements OnInit {
         if (this.id > 0) {  
             this.title = "Edit";  
             this._studentService.getStudentById(this.id)  
-                .subscribe(resp => this.studentForm.setValue(resp)  
-                , error => this.errorMessage = error);  
+              .subscribe((response: Student) => {
+                this.studentForm.setValue(response);
+              }, error => this.errorMessage = error);  
         }  
     }  
   
@@ -45,15 +46,15 @@ export class CreateStudent implements OnInit {
             return;  
         }  
   
-        if (this.title == "Create") {  
+        if (this.title === "Create") {  
             this._studentService.saveStudent(this.studentForm.value)  
-                .subscribe((data) => {  
+                .subscribe(() => {  
                     this._router.navigate(['/fetchstudent']);  
                 }, error => this.errorMessage = error)  
         }  
-        else if (this.title == "Edit") {  
+        else if (this.title === "Edit") {  
             this._studentService.updateStudent(this.studentForm.value)  
-                .subscribe((data) => {  
+                .subscribe(() => {  
                     this._router.navigate(['/fetchstudent']);  
                 }, error => this.errorMessage = error)   
         }  
@@ -62,7 +63,7 @@ export class CreateStudent implements OnInit {
     cancel() {  
         this._router.navigate(['/fetchstudent']);  
     }  
-  
+
     get personalIdentifier() { return this.studentForm.get('personalIdentifier'); }
     get name() { return this.studentForm.get('name'); }  
     get gender() { return this.studentForm.get('gender'); }  

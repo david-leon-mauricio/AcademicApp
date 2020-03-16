@@ -28,12 +28,14 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\addstudent\AddStudent.component.ts" />
     <None Remove="ClientApp\src\app\components\fetchstudent\FetchStudent.component.ts" />
+    <None Remove="ClientApp\src\models\student.ts" />
     <None Remove="ClientApp\src\services\studentservice.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\addstudent\addstudent.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\fetchstudent\fetchstudent.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\student.ts" />
     <TypeScriptCompile Include="ClientApp\src\services\studentservice.service.ts" />
   </ItemGroup>
 
